@@ -20,5 +20,7 @@ def update_counter():
         x, y = i % u_width, i / u_width
         unicornhathd.set_pixel(x, y, 255, 255, 255)
 
+    unicornhathd.show()
+
 
 update_counter()
