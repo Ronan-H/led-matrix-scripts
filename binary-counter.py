@@ -17,8 +17,10 @@ def update_counter():
 
     unicornhathd.clear()
     for i in range(len(bin_seconds)):
-        x, y = i % u_width, i / u_width
-        unicornhathd.set_pixel(x, y, 255, 255, 255)
+        if bin_seconds[i] == "1":
+            # x is inverted because pixel indexing is bugged
+            x, y = (15 - i % u_width), (i // u_width)
+            unicornhathd.set_pixel(x, y, 255, 255, 255)
 
     unicornhathd.show()
 
