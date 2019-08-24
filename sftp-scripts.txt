@@ -1,0 +1,2 @@
+put /home/ronan/code/led-matrix-scripts/*.py /home/pi/code/led-matrix-scripts
+

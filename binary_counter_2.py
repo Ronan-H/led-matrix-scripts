@@ -26,6 +26,10 @@ def update_counter():
 
     seconds = math.ceil((datetime(2020, 6, 1) - datetime.now()).total_seconds())
     quantities = [str(bin(sec))[2:] for sec in seconds_to_times(seconds)]
+    # add padding bits to the left
+    longest = max(len(q) for q in quantities)
+    quantities = [q.rjust(longest, "0") for q in quantities]
+
 
     unicornhathd.clear()
     for i in range(len(quantities)):
