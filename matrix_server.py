@@ -1,3 +1,4 @@
+import unicornhathd
 import socket
 
 
@@ -11,7 +12,9 @@ class Client:
         self.wait_for_client()
 
     def wait_for_client(self):
+        print("Waiting for new client...")
         self.sock, self.addr = self.server_sock.accept()
+        print("Client connected from", self.addr, ".")
 
     def read_line(self):
         text = ""
@@ -19,31 +22,33 @@ class Client:
             while True:
                 data = str(self.sock.recv(1))
                 data = data[2:-1]
-                print("data: " + data)
-                print("len(data): " + str(len(data)))
+                #print("data: " + data)
+                #print("len(data): " + str(len(data)))
 
-                if data == "\\r":
-                    print("\\r found; breaking...")
-                    # consume the following \n character
-                    self.sock.recv(1)
+                if data == "\\n":
+                    #print("\\n found; breaking...")
                     break
 
                 text += data
         except socket.error:
+            print("Error communicating with client. Disconnecting.")
+            self.sock.close()
+            self.sock.shutdown(2)
             self.wait_for_client()
             return None
 
+        #print("Text:", text)
         return text
 
 
-client = Client("127.0.0.1", 28891)
+unicornhathd.rotation(0)
+unicornhathd.brightness(0.6)
+u_width, u_height = unicornhathd.get_shape()
+client = Client("", 28891)
 
 running = True
 while running:
     line = client.read_line()
-    parts = line.split(":")
-    operationId = int(parts[0])
-    inputs = parts[1].split(",")
-
-    if operationId == 0:
-        pass
+    parts = line.split(",")
+    unicornhathd.set_pixel(*parts)
+    unicornhathd.show()
