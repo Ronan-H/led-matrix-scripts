@@ -16,29 +16,17 @@ class Client:
         self.sock, self.addr = self.server_sock.accept()
         print("Client connected from", self.addr, ".")
 
-    def read_line(self):
-        text = ""
+    def read_pixel(self):
         try:
-            while True:
-                data = str(self.sock.recv(1))
-                data = data[2:-1]
-                #print("data: " + data)
-                #print("len(data): " + str(len(data)))
+            data = tuple(self.sock.recv(5))
+            return data
 
-                if data == "\\n":
-                    #print("\\n found; breaking...")
-                    break
-
-                text += data
         except socket.error:
             print("Error communicating with client. Disconnecting.")
             self.sock.close()
             self.sock.shutdown(2)
             self.wait_for_client()
             return None
-
-        #print("Text:", text)
-        return text
 
 
 unicornhathd.rotation(0)
@@ -48,7 +36,6 @@ client = Client("", 28891)
 
 running = True
 while running:
-    line = client.read_line()
-    parts = line.split(",")
-    unicornhathd.set_pixel(*parts)
+    pixel = client.read_pixel()
+    unicornhathd.set_pixel(*pixel)
     unicornhathd.show()
