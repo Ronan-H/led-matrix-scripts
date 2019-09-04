@@ -19,6 +19,10 @@ class Client:
     def read_pixel(self):
         try:
             data = tuple(self.sock.recv(5))
+
+            if len(data) == 0:
+                raise socket.error()
+
             return data
 
         except socket.error:
@@ -37,5 +41,10 @@ client = Client("", 28891)
 running = True
 while running:
     pixel = client.read_pixel()
-    unicornhathd.set_pixel(*pixel)
-    unicornhathd.show()
+
+    if pixel[0] == 255:
+        unicornhathd.show()
+    else:
+        unicornhathd.set_pixel(*pixel)
+
+unicornhathd.show()
