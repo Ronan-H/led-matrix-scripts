@@ -27,14 +27,14 @@ class Client:
 
         except socket.error:
             print("Error communicating with client. Disconnecting.")
-            self.sock.close()
-            self.sock.shutdown(2)
             self.wait_for_client()
-            return None
+            return (0, 0, 0, 0, 0)
 
 
 unicornhathd.rotation(0)
-unicornhathd.brightness(0.6)
+unicornhathd.brightness(0.5)
+unicornhathd.rotation(270)
+
 u_width, u_height = unicornhathd.get_shape()
 client = Client("", 28891)
 
