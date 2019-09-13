@@ -42,9 +42,10 @@ running = True
 while running:
     pixel = client.read_pixel()
 
-    if pixel[0] == 255:
-        unicornhathd.show()
-    else:
-        unicornhathd.set_pixel(*pixel)
+    if len(pixel) == 5:
+        if pixel[0] == 255:
+            unicornhathd.show()
+        else:
+            unicornhathd.set_pixel(*pixel)
 
 unicornhathd.show()

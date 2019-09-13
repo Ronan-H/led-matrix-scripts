@@ -6,7 +6,8 @@ from datetime import datetime
 import math
 
 unicornhathd.rotation(0)
-unicornhathd.brightness(0.6)
+unicornhathd.brightness(0.5)
+unicornhathd.rotation(270)
 u_width, u_height = unicornhathd.get_shape()
 
 def seconds_to_times(seconds):
@@ -37,9 +38,9 @@ def update_counter():
         for j in range(len(quantity)):
             if quantity[j] == "1":
                 # x is inverted because pixel indexing is bugged
-                unicornhathd.set_pixel(15 - j, i, 255, 255, 255)
+                unicornhathd.set_pixel(15 - j, i, 200, 0, 0)
             else:
-                unicornhathd.set_pixel(15 - j, i, 50, 50, 50)
+                unicornhathd.set_pixel(15 - j, i, 20, 0, 0)
 
     unicornhathd.show()
 
